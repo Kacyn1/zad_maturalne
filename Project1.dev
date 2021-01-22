@@ -1,51 +1,78 @@
-[Project]
-FileName=Project1.dev
-Name=Project1
-Type=1
-Ver=2
-ObjFiles=
-Includes=
-Libs=
-PrivateResource=
-ResourceIncludes=
-MakeIncludes=
-Compiler=
-CppCompiler=
-Linker=
-IsCpp=1
-Icon=
-ExeOutput=
-ObjectOutput=
-LogOutput=
-LogOutputEnabled=0
-OverrideOutput=0
-OverrideOutputName=
-HostApplication=
-UseCustomMakefile=0
-CustomMakefile=
-CommandLine=
-Folders=
-IncludeVersionInfo=0
-SupportXPThemes=0
-CompilerSet=0
-CompilerSettings=0000000000000000000000000
+#include <iostream>
+#include <fstream>
+#include <vector>
 
-[VersionInfo]
-Major=1
-Minor=0
-Release=0
-Build=0
-LanguageID=1033
-CharsetID=1252
-CompanyName=
-FileVersion=
-FileDescription=Developed using the Dev-C++ IDE
-InternalName=
-LegalCopyright=
-LegalTrademarks=
-OriginalFilename=
-ProductName=
-ProductVersion=
-AutoIncBuildNr=0
-SyncProduct=1
+using namespace std;
 
+class ciagi {
+public:    
+ifstream filein;
+ofstream fileout;
+
+    vector<int> liczby;
+
+    int ilosc_c=0, max_r, roznica, liczba, dl_ciagu;
+    
+    
+    
+    bool js_arytmetyczny;
+
+    ciagi(){
+        filein.open("C:\\ciagi.txt");
+        fileout.open("C:\\wynik1.txt");
+    }
+    
+    ~ciagi(){
+        filein.close();
+        fileout.close();
+    }
+
+    void dow(){
+    
+    while(!filein.eof()){
+        
+        filein>>dl_ciagu;
+            
+            for(int i=0; i<dl_ciagu; i++){
+                filein>>liczba;
+                liczby.push_back(liczba);
+            }
+            
+        roznica=liczby[1]-liczby[0];
+        
+        js_arytmetyczny=true;
+        
+            for(int i=0; i+1<dl_ciagu; i++){
+                if(roznica!= liczby[i+1]-liczby[i]){
+                    js_arytmetyczny=false;
+                }
+                
+            }
+        if(js_arytmetyczny){
+            ilosc_c++;
+                if(max_r<roznica){
+                    max_r=roznica;
+            }
+    
+        }
+        
+        liczby.clear();
+        
+        
+    }
+    
+    fileout<<ilosc_c<<endl;
+    fileout<<max_r;
+    
+        
+    }
+    
+};
+
+int main(int argc, char** argv) {
+    
+ciagi c1;
+c1.dow();    
+    
+    return 0;
+}
